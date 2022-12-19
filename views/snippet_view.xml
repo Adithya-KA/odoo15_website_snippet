@@ -1,0 +1,104 @@
+<odoo>
+    <data>
+        <template id="snippet_view" name="Customer Snippet">
+            <section class="oe_structure top_snippet_view">
+                <div class="heading">
+                    <br/>
+                    <center>
+                        <h2 class="main">
+                            <b>Top 10 Customers</b>
+                        </h2>
+                    </center>
+                    <br/>
+                </div>
+                <div class="wrapper">
+                    <div class="container">
+                        <div class="row">
+                            <div class="tab-content">
+                                <div>
+                                    <div class="partners_carousel_slider oe_website_sale">
+                                        <input type="hidden" name="partners_count"
+                                               t-if="objects"
+                                               t-att-value="len(objects)"/>
+                                        <div t-att-id="uniqueId"
+                                             class="carousel slide d-flex"
+                                             data-ride="carousel">
+                                            <a class="o_partners_carousel_control carousel-control-prev position-relative"
+                                               t-att-href="'#' + uniqueId"
+                                               role="button"
+                                               data-slide="prev"
+                                               t-if="num_slides">1 >
+                                                <i class="fa fa-2x fa-chevron-left text-black-50"/>
+                                                <span class="sr-only">
+                                                    Previous
+                                                </span>
+                                            </a>
+                                            <div class="carousel-inner">
+                                                <t t-foreach="objects"
+                                                   t-as="partner">
+                                                    <div t-attf-class="carousel-item #{'' if partner_index else 'active'}">
+                                                        <div class="container">
+                                                            <div class="row">
+                                                                <t t-foreach="partner"
+                                                                   t-as="item">
+                                                                    <div class="col-sm-3  col-12">
+                                                                        <a t-attf-href="/partners/#{item['id']}">
+                                                                            <div class="col-16 align-items-center">
+                                                                                <div class="container">
+                                                                                    <img class="card-img-top"
+                                                                                         t-attf-src="data:image/png;base64,{{item['img']}}"
+                                                                                         height='220px'
+                                                                                         width='180px'/>
+                                                                                </div>
+                                                                                <div class="img_details">
+                                                                                    <h5 class="partner_name">
+                                                                                        <span t-if="item"
+                                                                                              t-esc="item['name']"/>
+                                                                                    </h5>
+                                                                                    <div class="created">
+                                                                                        <span t-if="item">
+                                                                                            Total Sales:
+                                                                                            <span t-esc="item['sale_count']"/>
+                                                                                        </span>
+                                                                                    </div>
+                                                                                </div>
+                                                                            </div>
+                                                                        </a>
+                                                                    </div>
+                                                                </t>
+                                                            </div>
+                                                            <br/>
+                                                        </div>
+                                                    </div>
+                                                </t>
+                                            </div>
+                                            <a class="o_partners_carousel_control carousel-control-next position-relative"
+                                               t-att-href="'#' + uniqueId"
+                                               role="button"
+                                               data-slide="next"
+                                               t-if="num_slides">
+                                                1 >
+                                                <i class="fa fa-2x fa-chevron-right text-black-50"/>
+                                                <span class="sr-only">Next
+                                                </span>
+                                            </a>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </section>
+        </template>
+        <template id="customer_snippets" inherit_id="website.snippets">
+            <xpath expr="//div[@id='snippet_effect']" position="inside">
+                <div id="snippet_demo_snippets" class="o_panel">
+                    <div class="o_panel_body">
+                        <t t-snippet="website_snippet.snippet_view"/>
+                    </div>
+                </div>
+            </xpath>
+        </template>
+    </data>
+</odoo>
